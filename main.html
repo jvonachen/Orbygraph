@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Orbygraph</title>
+		<link rel="stylesheet" type="text/css" href="main.css" />
+		<link rel="shorcut icon" type="image/png" href="images/imageLogo16.png" />
+		<script src="main.js"></script>
+		<script src="particle.js"></script>
+		<script src="change.js"></script>
+		<script src="color.js"></script>
+	</head>
+	<body>
+		<img src="images/imageLogo50.png" />
+		<img id="textLogo" src="images/textLogo.png" />
+		<a id="facebookButton" href="https://www.facebook.com/groups/1127852597305468/" target="_blank">
+			<img src="images/facebookLogoBW.png" title="Orbygraphers Facebook Group" />
+		</a>
+		<table>
+			<tr>
+				<td id="svgCell">
+					<svg id="svgViewport" xmlns="http://www.w3.org/2000/svg"
+						xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
+						<g id="svgGroup">
+						</g>
+					</svg>
+				</td>
+				<td id="controlCell">
+					<table class="fixedTable">
+						<tr>
+							<td>
+								<button class="tutorialText" title="About" id="about" onclick="orbygraph.textClick(this);">
+									1
+								</button>
+							</td>
+							<td>
+								<button class="tutorialText" title="Choose Size" id="chooseSize" onclick="orbygraph.textClick(this);">
+									2
+								</button>
+							</td>
+							<td>
+								<button class="tutorialText" title="Background" id="background" onclick="orbygraph.textClick(this);">
+									3
+								</button>
+							</td>
+							<td>
+								<button class="tutorialText" title="Add Particles" id="addParticles" onclick="orbygraph.textClick(this);">
+									4
+								</button>
+							</td>
+							<td>
+								<button class="tutorialText" title="Add Changes" id="addChange" onclick="orbygraph.textClick(this);">
+									5
+								</button>
+							</td>
+							<td>
+								<button class="tutorialText" title="Save Image" id="saveImage" onclick="orbygraph.textClick(this);">
+									6
+								</button>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="6">
+								<span id="aboutSpan">
+									This is what I call an art toy. By playing with the toy you create art. It's like Spirograph except instead of using gears to mimic orbits it uses a simulation of gravity, Newton's gravity in two dimensions. Start by choosing a size.  Click on the selected number above to toggle the display of these texts.  Remember, everything that happens in the universe, in one way or another, is play.
+								</span>
+								<span id="chooseSizeSpan" class="hidden">
+									The SVG viewport on your left is a window on the SVG canvas.  The SVG canvas is unlimited but the viewport is limited.  By adding particles to the SVG canvas they become visible throught the viewport.  The inputs just below, dimensions in pixels for generated image, allow you to render the image into a raster image.  The viewport resizes to the same aspect ratio of the chosen dimensions but will still occupy the largest size it can.  The dimensions of the inputs are not the dimensions of the viewport, they are the dimensions you can render to a raster image.  You can use the select input just to the right of it to choose common computer, television, and movie display sizes.  Below those controls you can choose to use units for printed sizes.  The default is inches but you can choose centimeters instead.  PPI lets you control the pixels per inch.
+								</span>
+								<span id="backgroundSpan" class="hidden">
+									Play with the CMYK controls, Cyan Magenta Yellow Black, to change the background color.  Each number control has slightly red up and down buttons.  These buttons change the value by a step value.  Each time you change a value in any control the change is instantly shown in the viewport.  The slightly green up and down buttons increase and decrease the step value, multiplying and dividing the step value by 10.  There are limits for the values and step values.  You can also click on the colored bar below Black to bring up a color picker input.
+								</span>
+								<span id="addParticlesSpan" class="hidden">
+									Click Add Particle.  This is a particle that can influence and be influenced by other particles.  Increase the magnitude.  This is the initial speed of the particle in pixels per orbit loop iteration.  Increasing the orbit loop iterations will lengthen the simulation.  The direction of the particle is expressed in radians.  Add another particle.  Move it around.  In the cartesian plane positive y goes up, but in computer graphics positive y goes down.  Because of that positive angles go clockwise instead of counter-clockwise.  Every additional particle adds a new checkbox to the influenced-by control.  The particles do not influence each other unless you choose it.  You can not choose a particle to influence itself.  Play with the mass values, stroke widths, opacity.  Positive mass values will attract, negative will repell.  If you click the button with the particle number it will collapse and expand the particle controls.  That way you can see just what you want to see.
+								</span>
+								<span id="addChangeSpan" class="hidden">
+									Click Add Change.  Choose a particle and a parameter.  Then increase the Change Loop a few iterations.  Each change loop iteration is an additional simulation layer except it starts the simulation over with changes accumulated.  Try it with a large number of orbit loop iterations and a few change loop iterations.  Then try it the other way around.  Increase the stroke width, then decrease the opacity to get complex layered colors.  Changes also have a button to collapse and expand the controls.
+								</span>
+								<span id="saveImageSpan" class="hidden">
+									When you like what you have made, click on Generate PNG (Portable Network Graphic) which is a raster image file format.  Your browser may block the pop-up.  Just choose to allow pop-ups for this page, from an icon that will be displayed after being blocked.  The dimensions of the viewport are simply the aspect ratio of the dimensions you choose.  The image will be rendered in those dimensions and placed in a canvas in a new window or tab.  From there you can right click and save as image...  You can make the image smaller or much larger than the viewport, depending on the power of your computer.  I've rendered many images 4K as well as 4 feet square at 300 ppi, 14,400 pixels square!  After that you can close the window or tab and continue with the image or reload the page to reset all the values.  I invite you to join the Orbygraphers Facebook group so you can show off your images and see what others have made.  On the Facebook group you can suggest new features or complain if something is not what you think it should be.  Thanks and share this with others you think might appreciate it.
+								</span>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="6">
+								<button class="labelSpan" onclick="orbygraph.toggleGeneral();">
+									General Settings
+								</button>
+							</td>
+						</tr>
+					</table>
+					<span id="generalSettingsSpan">
+						<table class="fixedTable" id="generalSettingsTable">
+							<tr>
+								<td class="labelCell" title="Print Width">
+									<span class="labelSpan">
+										PW:
+									</span>
+								</td>
+								<td title="Print Width" class="inputCell">
+									<input class="tableInput" id="pwInput" onchange="orbygraph.updateDimensions(this);" />
+								</td>
+								<td class="labelCell" title="Print Height">
+									<span class="labelSpan">
+										PH:
+									</span>
+								</td>
+								<td title="Print Height" class="inputCell">
+									<input class="tableInput" id="phInput" onchange="orbygraph.updateDimensions(this);" />
+								</td>
+								<td class="labelCell" title="Dimension Select">
+									<span class="labelSpan">
+										DS:
+									</span>
+								</td>
+								<td title="Dimension Select" colspan="2">
+									<select class="tableInput" id="dimensionSelect" title="Dimension Select">
+										<option value='{"w":null, "h":null}'>
+										</option>
+										<option value='{"w":720, "h":480}'>
+											480p
+										</option>
+										<option value='{"w":720, "h":576}'>
+											576p
+										</option>
+										<option value='{"w":1280, "h":720}'>
+											WXGA
+										</option>
+										<option value='{"w":1366, "h":768}'>
+											HD
+										</option>
+										<option value='{"w":1920, "h":1080}'>
+											Full HD
+										</option>
+										<option value='{"w":1440, "h":900}'>
+											WXGA+
+										</option>
+										<option value='{"w":1600, "h":900}'>
+											HD+
+										</option>
+										<option value='{"w":1680, "h":1050}'>
+											WSXGA+
+										</option>
+										<option value='{"w":3840, "h":2160}'>
+											UHD(4k)
+										</option>
+										<option value='{"w":7680, "h":4320}'>
+											UHD(8k)
+										</option>
+									</select>
+								</td>
+								<td title="Render Raster Image as PNG">
+									<button  class="generateButton" id="saveImageButton" onclick="orbygraph.saveAsPNG();">
+										PNG
+									</button>
+								</td>
+							</tr>
+							<tr>
+								<td class="labelCell" title="Output Width">
+									<span class="labelSpan">
+										OW:
+									</span>
+								</td>
+								<td title="Output Width" class="inputCell">
+									<input class="tableInput" id="owInput" onchange="orbygraph.updateDimensions(this);" />
+								</td>
+								<td class="labelCell" title="Output Height">
+									<span class="labelSpan">
+										OH:
+									</span>
+								</td>
+								<td title="Output Height" class="inputCell">
+									<input class="tableInput" id="ohInput" onchange="orbygraph.updateDimensions(this);" />
+								</td>
+								<td class="labelCell" title="Pixels Per Inch">
+									<span class="labelSpan">
+										PPI:
+									</span>
+								</td>
+								<td title="Pixels Per Inch" class="inputCell">
+									<input class="tableInput" id="ppiInput" onchange="orbygraph.updateDimensions(this);" />
+								</td>
+								<td class="labelCell" title="Centimeters">
+									<span class="labelSpan">
+										CM:
+									</span>
+								</td>
+								<td title="Centimeters" class="inputCell">
+									<input id="cmInput" type="checkbox" onclick="orbygraph.updateDimensions(this);" />
+								</td>
+							</tr>
+							<tr class="movieControls">
+								<!-- Full Scale Frames Per Second -->
+								<td class="labelCell" title="Full Frames Per Second">
+									<span class="labelSpan">
+										FPS:
+									</span>
+								</td>
+								<td title="Frames Per Second" class="inputCell">
+									<input class="tableInput" id="fpsInput" />
+								</td>
+
+								<!-- Full Scale Total Hours -->
+								<td class="labelCell" title="Full Hours">
+									<span class="labelSpan">
+										HR:
+									</span>
+								</td>
+								<td title="Frames" class="inputCell">
+									<input class="tableInput" id="hoursInput" />
+								</td>
+
+								<!-- Full Scale Total Minutes -->
+								<td class="labelCell" title="Full Minutes">
+									<span class="labelSpan">
+										MN:
+									</span>
+								</td>
+								<td title="Seconds" class="inputCell">
+									<input class="tableInput" id="minutesInput" />
+								</td>
+
+								<!-- Full Scale Total Seconds -->
+								<td class="labelCell" title="Full Seconds">
+									<span class="labelSpan">
+										SE:
+									</span>
+								</td>
+								<td title="Seconds" class="inputCell">
+									<input class="tableInput" id="seInput">
+								</td>
+							</tr>
+							<tr class="movieControls">
+								<td colspan="8" style="text-align:center;">
+									<button class="generateButton" id="genFullButton">
+										Generate Full Scale MP4 With All Frames
+									</button>
+								</td>
+							</tr>
+							<tr class="movieControls">
+								<td class="labelCell" title="Draft Frames Per Second">
+									<span class="labelSpan">
+										FPS:
+									</span>
+								</td>
+								<td class="inputCell" title="Draft Frames Per Second">
+									<input class="tableInput" id="draftFramesPerSecondInput" />
+								</td>
+
+								<td class="labelCell" title="Draft Start Hours">
+									<span class="labelSpan">
+										HR:
+									</span>
+								</td>
+								<td class="inputCell" title="Draft Start Hours">
+									<input class="tableInput" id="draftHours" />
+								</td>
+
+								<td class="labelCell" title="Draft Start Minutes">
+									<span class="labelSpan">
+										MN:
+									</span>
+								</td>
+								<td title="Draft Start Minutes" class="inputCell">
+									<input class="tableInput" id="scaleInput" />
+								</td>
+
+								<td class="labelCell" title="Draft Start Seconds">
+									<span class="labelSpan">
+										SE:
+									</span>
+								</td>
+								<td title="Draft Start Seconds" class="inputCell">
+									<input class="tableInput" id="scaleInput" />
+								</td>
+							</tr>
+							<tr class="movieControls">
+								<td class="labelCell" title="Resolution Scalar">
+									<span class="labelSpan">
+										RS:
+									</span>
+								</td>
+								<td class="inputCell" title="Resolution Scalar">
+									<input class="tableInput" id="resolutionScalarInput" />
+								</td>
+
+								<td class="labelCell" title="Draft End Hours">
+									<span class="labelSpan">
+										HR:
+									</span>
+								</td>
+								<td class="inputCell" title="Draft End Hours">
+									<input class="tableInput" id="endDraftHours" />
+								</td>
+
+								<td class="labelCell" title="Draft End Minutes">
+									<span class="labelSpan">
+										MN:
+									</span>
+								</td>
+								<td class="inputCell" title="Draft End Minutes">
+									<input class="tableInput" id="draftEndMinutesInput" />
+								</td>
+
+								<td class="labelCell" title="Draft End Seconds">
+									<span class="labelSpan">
+										SE:
+									</span>
+								</td>
+								<td title="Draft End Seconds" class="inputCell">
+									<input class="tableInput" id="draftEndSecondsInput" />
+								</td>
+							</tr>
+							<tr class="movieControls">
+								<td colspan="8" style="text-align:center;">
+									<button class="generateButton" id="genDraftButton">
+										Generate Draft MP4
+									</button>
+								</td>
+							</tr>
+						</table>
+						<table id="controlTable" class="fixedTable">
+						</table>
+					</span>
+					<button id="addParticleButton">
+						Add Particle
+					</button>
+					<div id="particleDiv">
+					</div>
+					<button id="addChangeButton">
+						Add Change
+					</button>
+					<div id="changeDiv">
+					</div>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

@@ -1,0 +1,34 @@
+body {
+	background-image:url("images/background.png");
+	background-repeat:repeat;
+	font-family:"Arial Narrow";
+	font-weight:lighter;
+	font-size:15px;
+}
+
+svg             { border:1px solid black; background-color:white; }
+#textLogo       { position:relative; left:5px; top:1px; }
+#facebookButton { position:relative; left:30px; top:-10px; }
+#controlCell    { vertical-align:top; }
+#svgCell        { vertical-align:top; }
+.value          { background-color:#FFEEEE; cursor:pointer; }
+.step           { background-color:#EEFFEE; cursor:pointer; }
+.hidden         { display:none; visibility:hidden; }
+.tutorialText   { width:100%; font-weight:bold; }
+.labelCell      { text-align:right; }
+.labelSpan      { width:100%; font-weight:bold; font-size:14px;}
+.tableInput     { width:100%; text-align:center; }
+.generateButton {
+	width:100%;
+	text-align:center;
+	font-weight:bold;
+	background-color:#99FF99;
+}
+.fixedTable     { table-layout:fixed; width:350px; }
+#hmsInput       { position:relative; left:-4px; }
+#scaleInput     { position:relative; left:-3px; }
+#colorPickerGlobal { position:relative; left:-4px; }
+#generalSettingsTable { border-collapse:collapse; }
+#genFullButton  { width:330px; }
+#genDraftButton  { width:330px; }
+.movieControls  { background-color: rgba(255, 255, 255, 0.3); }

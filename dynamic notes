@@ -1,0 +1,188 @@
+Sequenced list of stories for Orbygraph
+
+- make a set of presets (may involve refactoring to make more MVC)
+- create animations from change loop.  In other words render each change-loop
+image into a frame and save it with a sequential filename and then combine them
+into an animation.  Any resolution, any aspect ratio. 
+- frames per second
+- length of animation in hours minutes seconds
+- Another change loop level like a meta change loop
+- look into making animations by stitching together images on a unix environment
+on the server and not manually.  Be able to generate animations of any size and
+download them, possibly playing them in a video tag.
+- make youtube channel for animations
+- stitching together animation with an audio file.
+- somehow charge people whatever the Joyent is charging me except double or
+triple it.
+- Give the user a certain amount of free animation use, let them use it up to
+let them know how much they can do for how much it costs.  Have an itemized list
+of jobs they did and how much it cost and why.  Then they have to purchase
+credits ahead of time using paypal just to start off.  Later if and when it
+makes sense start using your own handling of credit card numbers.
+- The whole thing needs to be automatic.  I make money essentially reselling
+processing, bandwidth, and storage.  I should be able to work on it if I want to
+and not if I don't.
+
+- saving settings between sessions - yes but only when the features and the
+model program is locked down, and if I add or delete features it should only add
+to the model and never subtract from it.  Saving image settings can be a pay
+only feature.
+- authentication should only use secret code authentication so people can use it
+without providing any personal information.  Also because people can't be
+trusted to generate good passwords.
+
+- When the site makes what I make at Terumo for a solid year then quit and work
+on SaVaGe just like flash except without the security holes, the browser
+plug-ins that require constant updates and it's all web based.  There will be an
+editor and player.  The player is free and is a Javascript file that is loaded
+in with a page.  Then the content creators use the editor to create content.
+Still images are free, animation costs a small amount.  It will cost money to
+create animations, whatever Joyent charges x 2 which will be a very small
+amount.
+
+- expand SaVaGe to work with collections of photographs helps to make a special
+kind of stop-motion animation to make a TV shows and movies.
+
+If a customer makes a movie the individual images are uploaded to the server,
+the transfers have a cost in bandwidth, and saved until the custommer deletes
+them.  The storage has a cost.  A lossless movie stitched together from
+thousands of individual images has a processing cost.  The default is that the
+movie is made but perhaps the user can stitch it together themselves so all they
+do is download the images and delete them from the server.
+The movie in it's lossless state will be huge, that has a cost of storage.
+The movie is then transcoded into one or more lossless or lossy versions.
+That storage costs.
+If the customer then downloads the individual images, the original lossless
+movie, and the transcoded version, that transfer costs.
+
+Make movie button.
+checkbox for make movie after generation of images.
+checkbox for download individual images after generation and then delete from
+server. checkbox for delete images from server after download.
+
+Free portion
+- make still images lossless unlimited.
+
+
+- move site to jvonachen account instead of root
+- purchase or aquire an authoritatively signed certificate
+- change node.js server to be https
+- add/design the secret code authentication system
+	- The user can push a button and it will tell the server to generate a secret
+	code from random.org.
+	- before or after they do this they can check a box saying store the secret
+	code in a cookie on this browser.  The default is to not store.  The user may
+	be using a public computer or a computer that other people have common access
+	to.  If the cookie does not exist then if/when the box is checked it will make
+	the cookie.  If the cookie exists then if/when the box is unchecked it will
+	delete the cookie.
+	- The secret code is normally displayed as asterisks in an input.  You can
+	push a button and it will temporarily display the secret code for 30 or 60
+	seconds and then timeout and turn back into asterisks.  If the button is
+	pressed again before the timeout it will turn back into asterisks immediately.
+	- The user can write down the secret code while it is being displayed and use
+	it in a different browser and/or a different computer in order to have access
+	to their account.
+	- The secret code authentication system has a couple of advantages. 1. It
+	eliminates a major problem with security, the fact that most people use the
+	same password over and over again. People can't be trusted to choose good
+	passwords.  2. Since the secret code is random and unique it serves as both a
+	username and a password.  People also often use the same username for
+	everything.  In this way the user need not identify themselves with their
+	username and also need not provide any other information about themselves.
+	This is sometimes a barrier to signing up for an account.  They can use a
+	service in a minimal way and do so completely anonymously.
+- Figure out how Joyent charges me for bandwidth, storage, cpu use.
+- Deveop the animation part
+- install an instance of mongo on my joyent account
+- be able to store/retrieve image/animation data to mongo
+- figure out how much it costs me to have a customer use the server for each
+little thing
+- Give the user $10 credit for creating an account.
+- Give the user a report on the current credit and how much a given operation
+will cost each time they do something that costs money, even if it's a fraction
+of a penny.
+- If they don't have enough credit they can buy more credit or they can not do
+the operation.
+- Allow the users to only buy chunks of credit $10, $100, $1,000, $10,000
+through Paypal.
+- Make animations for phone or tablet users and charge a dollar for each
+download.  Also use that to market the service.
+
+- SEO
+
+- At the end of the cm checkbox add a button for final animation.  It should
+have a price on it.
+- Add an extra row for draft animation. frame begin, frame end, scalar for
+reducing the size, and a button for generating a draft animation with a price
+on it.
+  
+Script for video
+
+Hello Orbygraphers or potential Orbygraphers.  My name is John Vonachen and I wrote this web software called Orbygraph.  It's what I call an "art-toy".  By playing with the toy you create art.  Years ago, not that long ago really, a Spirograph caught my eye and I made a number of drawings with it.  At the time I was learning how to use the cavas tag in HTML5.  This inspired me to make a peice of web software, similar but instead I used only circular orbits with cycles and epicycles, not really the hypotrochoids and epitrochoids which are what Spirograph makes.  To me they look like orbits and I think that's probably why it was popular in 1965 when the world was space happy.  What I made was interesting with the circular orbits, especially when you animate it, but I could do better than that.  I wanted to make it with real (simulated) gravity.  But even more, provide a tool for other people to create art using the SVG (Scaleable Vector Graphic) tag in HTML5.
+
+gui
+
+- still image or single frame
+	- Inputs
+		- width in pixels
+		- height in pixels
+		- presets for width and height in pixels
+			- still image
+				- printing - should set height and width of output in inches or cm,
+				check box for cm, given current PPI, radio buttons for landscape and
+				portrait, should be mm instead of cm
+					- ISO A 0-10
+					- North American
+						- letter
+						- legal
+						- tabloid
+						- ledger
+				- background for device, just pixels
+				
+			- moving image
+				- device
+				- TV format
+				- movie format
+		- PPI
+		- standard or metric
+	- Outputs
+		- size in MB
+<Button for generating a still image>
+
+- Full version of moving image
+	- Inputs
+		- hours
+		- minutes
+		- seconds
+		- or upload sound file and HMS is derived from that
+		- FPS, floating point?
+	- Outputs
+		- total seconds
+		- total frames
+		- memory size in MB
+		- cost
+			- time (how long will it take to generate the movie)
+			- money (how much will it cost me)
+<Button for generating the full quality version of the movie> - Should bring up a confirmation alert telling the user how long it will take (estimate) and how much it will cost.  Are you sure you want this to start?  Yes, No.  After starting, the user should be shown in real time how much time it has taken so far, how much time it will still take (estimate), how much it has cost so far, how much it will cost when finished.  The user should be able to pause or stop (with confirmation) the current render anytime, but they are still charged for incomplete renders, make sure the user is aware of this.  Users are given $10 credit free with an account.  $10 should be enough for a months worth of rendering either the full or draft.  After that they would need to provide an email address associated with paypal.  Users can purchase blocks of credit: $10, $100, $1000, etc.  Buttons that cost money will be disabled when the user does not have enough credit.  This circumstance should be checked on the server at the time of the AJAX call also.  If the user has circumvented the client side button, disabled state, and does not have enough credit then it should give an alert saying they do not have enough credit.  That user's account should note the fact that they tried to cheat it.  All of this applies to the draft button also.
+
+- Draft version of moving image
+	- inputs
+		- dimensions 1/[a] (1/2, 1/3, 1/4, etc.)
+		- Time 1/[b]
+			- 1/2 - generate every frame locally but only saves every other frame.  For instance if the FPS of the full version is 24 this would be 12fps
+			- 1/3 - generate every frame locally but only saves every third frame.  This would be 8fps.
+			- 1/4 6fps
+			- etc.  how do you handle FPS that is floating point?
+		- Range (not for this version but for when we are making more than just abstract images)
+			- beginning H:MM:SS
+			- ending H:MM:SS
+	- outputs
+		- total seconds remains the same
+		- total frames is reduced
+		- FPS derived from ratio, then that calculated FPS is applied to the generation of the MP4 on the server.  Might become floating point.
+		- memory size should be reduced, expressed in MB
+		- cost
+			- time reduced
+			- money reduced
+<Button for generating the draft version of the movie>
