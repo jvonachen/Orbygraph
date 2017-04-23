@@ -20,7 +20,8 @@
 			<tr>
 				<td id="svgCell">
 					<svg id="svgViewport" xmlns="http://www.w3.org/2000/svg"
-						xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
+						 xmlns:xlink="http://www.w3.org/1999/xlink"
+						 xml:space="preserve">
 						<g id="svgGroup">
 						</g>
 					</svg>
@@ -92,20 +93,20 @@
 					<span id="generalSettingsSpan">
 						<table class="fixedTable" id="generalSettingsTable">
 							<tr>
-								<td class="labelCell" title="Print Width">
+								<td class="labelCell" title="Pixel Width">
 									<span class="labelSpan">
 										PW:
 									</span>
 								</td>
-								<td title="Print Width" class="inputCell">
+								<td title="Pixel Width" class="inputCell">
 									<input class="tableInput" id="pwInput" onchange="orbygraph.updateDimensions(this);" />
 								</td>
-								<td class="labelCell" title="Print Height">
+								<td class="labelCell" title="Pixel Height">
 									<span class="labelSpan">
 										PH:
 									</span>
 								</td>
-								<td title="Print Height" class="inputCell">
+								<td title="Pixel Height" class="inputCell">
 									<input class="tableInput" id="phInput" onchange="orbygraph.updateDimensions(this);" />
 								</td>
 								<td class="labelCell" title="Dimension Select">
@@ -190,49 +191,42 @@
 								</td>
 							</tr>
 							<tr class="movieControls">
-								<!-- Full Scale Frames Per Second -->
 								<td class="labelCell" title="Full Frames Per Second">
 									<span class="labelSpan">
 										FPS:
 									</span>
 								</td>
-								<td title="Frames Per Second" class="inputCell">
-									<input class="tableInput" id="fpsInput" />
+								<td title="Full Frames Per Second" class="inputCell">
+									<input class="tableInput anim" id="ffpsInput" />
 								</td>
-
-								<!-- Full Scale Total Hours -->
 								<td class="labelCell" title="Full Hours">
 									<span class="labelSpan">
 										HR:
 									</span>
 								</td>
 								<td title="Frames" class="inputCell">
-									<input class="tableInput" id="hoursInput" />
+									<input class="tableInput anim" id="fhoursInput" />
 								</td>
-
-								<!-- Full Scale Total Minutes -->
 								<td class="labelCell" title="Full Minutes">
 									<span class="labelSpan">
 										MN:
 									</span>
 								</td>
 								<td title="Seconds" class="inputCell">
-									<input class="tableInput" id="minutesInput" />
+									<input class="tableInput anim" id="fminutesInput" />
 								</td>
-
-								<!-- Full Scale Total Seconds -->
 								<td class="labelCell" title="Full Seconds">
 									<span class="labelSpan">
 										SE:
 									</span>
 								</td>
 								<td title="Seconds" class="inputCell">
-									<input class="tableInput" id="seInput">
+									<input class="tableInput anim" id="fseInput">
 								</td>
 							</tr>
 							<tr class="movieControls">
 								<td colspan="8" style="text-align:center;">
-									<button class="generateButton" id="genFullButton">
+									<button class="generateButton" id="genFullButton" onclick="orbygraph.generateFull();">
 										Generate Full Scale MP4 With All Frames
 									</button>
 								</td>
@@ -244,7 +238,7 @@
 									</span>
 								</td>
 								<td class="inputCell" title="Draft Frames Per Second">
-									<input class="tableInput" id="draftFramesPerSecondInput" />
+									<input class="tableInput anim" id="dfpsInput" />
 								</td>
 
 								<td class="labelCell" title="Draft Start Hours">
@@ -253,7 +247,7 @@
 									</span>
 								</td>
 								<td class="inputCell" title="Draft Start Hours">
-									<input class="tableInput" id="draftHours" />
+									<input class="tableInput anim" id="dHours" />
 								</td>
 
 								<td class="labelCell" title="Draft Start Minutes">
@@ -262,7 +256,7 @@
 									</span>
 								</td>
 								<td title="Draft Start Minutes" class="inputCell">
-									<input class="tableInput" id="scaleInput" />
+									<input class="tableInput anim" id="dmnInput" />
 								</td>
 
 								<td class="labelCell" title="Draft Start Seconds">
@@ -271,7 +265,7 @@
 									</span>
 								</td>
 								<td title="Draft Start Seconds" class="inputCell">
-									<input class="tableInput" id="scaleInput" />
+									<input class="tableInput anim" id="dsseInput" />
 								</td>
 							</tr>
 							<tr class="movieControls">
@@ -281,25 +275,23 @@
 									</span>
 								</td>
 								<td class="inputCell" title="Resolution Scalar">
-									<input class="tableInput" id="resolutionScalarInput" />
+									<input class="tableInput anim" id="rsInput" />
 								</td>
-
 								<td class="labelCell" title="Draft End Hours">
 									<span class="labelSpan">
 										HR:
 									</span>
 								</td>
 								<td class="inputCell" title="Draft End Hours">
-									<input class="tableInput" id="endDraftHours" />
+									<input class="tableInput anim" id="edhrInput" />
 								</td>
-
 								<td class="labelCell" title="Draft End Minutes">
 									<span class="labelSpan">
 										MN:
 									</span>
 								</td>
 								<td class="inputCell" title="Draft End Minutes">
-									<input class="tableInput" id="draftEndMinutesInput" />
+									<input class="tableInput anim" id="demnInput" />
 								</td>
 
 								<td class="labelCell" title="Draft End Seconds">
@@ -308,7 +300,7 @@
 									</span>
 								</td>
 								<td title="Draft End Seconds" class="inputCell">
-									<input class="tableInput" id="draftEndSecondsInput" />
+									<input class="tableInput anim" id="draftEndSecondsInput" />
 								</td>
 							</tr>
 							<tr class="movieControls">
@@ -335,5 +327,6 @@
 				</td>
 			</tr>
 		</table>
+		<a id="saveLink">Save</a>
 	</body>
 </html>

@@ -25,10 +25,9 @@ svg             { border:1px solid black; background-color:white; }
 	background-color:#99FF99;
 }
 .fixedTable     { table-layout:fixed; width:350px; }
-#hmsInput       { position:relative; left:-4px; }
-#scaleInput     { position:relative; left:-3px; }
-#colorPickerGlobal { position:relative; left:-4px; }
+.anim       	{ position:relative; left:-3px; }
 #generalSettingsTable { border-collapse:collapse; }
 #genFullButton  { width:330px; }
-#genDraftButton  { width:330px; }
+#genDraftButton { width:330px; }
 .movieControls  { background-color: rgba(255, 255, 255, 0.3); }
+#saveLink       { visibility:hidden; display:none; }

@@ -9,7 +9,7 @@ Orbygraph.prototype.Particle = function() {
 	// attracted to checkbox and span array
 	this.atsca = [];
 
-	// initialize a variable attached to the contructor function and not this
+	// initialize a variable attached to the constructor function and not this
 	if (ss.nextId === undefined) {
 		ss.nextId = 0;
 	}

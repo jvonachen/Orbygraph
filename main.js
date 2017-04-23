@@ -2,12 +2,92 @@ var orbygraph;
 
 // Constructor function
 var Orbygraph = function() {
-	var addParticleButton, addChangeButton, i, newParticle, pwInput, phInput,
-		ppiInput, dimensionSelect, totalFrames;
+	var addParticleButton, addChangeButton, pwInput, phInput, ppiInput, dimensionSelect;
+
+	// animation stuff
+	this.FPS = 30;
+	this.marks = [
+		20, // index 0 could always be the total length of the animation.
+
+		0,  // index 1 could always be 0
+        5,  // index 2
+        10, // index 3
+        15, // index 4
+        20  // index 5
+	];
+	this.animChanges = [
+		// static general changes
+		// parameter, change loop, value, beginning mark, ending mark
+//		{'pa':'cl', 'v':1, 'bm':1, 'em':2},
+		// mark
+//		{'pa':'cl', 'v':1, 'm':1},            // at mark, just once, set changeLoop to value
+//      {'pa':'ol', 'v':1, 'bm':1, 'em':2},   // from begin mark to end mark increase orbitLoop by value per second
+//      {'pa':'ol', 'v':1, 'm':1},                      // at mark, just once, set orbitLoop to value
+//      {'pa':'cy', 'v':0.01, 'beginMark':1, 'endMark':3},    // from begin mark to end mark increase the background cyan value per second
+//      {'pa':'cy', 'v':0.01, 'mark':1},                      // at mark, just once, set the background cyan to value
+//      {'pa':'ma', 'v':0.01, 'beginMark':2, 'endMark':4}, // from begin mark to end mark increase the background magenta value per second
+//      {'pa':'ma', 'v':0.01, 'mark':2},                   // at mark, just once, set the background magenta to value
+//      {'pa':'yl', 'v':0.01, 'beginMark':3, 'endMark':5},  // from begin mark to end mark increase the background yellow value per second
+//      {'pa':'yl', 'v':0.01, 'mark':3},                    // at mark, just once, set the background yellow to value
+//      {'pa':'bk', 'v':0.01, 'beginMark':4, 'endMark':5},   // from begin mark to end mark increase the background black value per second
+//      {'pa':'bk', 'v':0.01, 'mark':4},                     // at mark, just once, set the background black to value
+
+		// particle changes
+//      {'pa':'ap', 'mark':3},
+//		{'pa':'xp', 'part':0, 'v':100, 'mark':2},
+//      {'pa':'xp', 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
+//      {'pa':'yp', 'part':0, 'v':100, 'mark':2},
+//      {'pa':'yp', 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
+//      {'pa':'dr', 'part':0, 'v':100, 'mark':2},
+//      {'pa':'dr', 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
+//      {'pa':'mg', 'part':0, 'v':100, 'mark':2},
+//      {'pa':'mg', 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
+//      {'pa':'ms', 'part':0, 'v':100, 'mark':2},
+//      {'pa':'ms', 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
+//      {'pa':'cy', 'part':0, 'v':100, 'mark':2},
+//      {'pa':'cy', 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
+//      {'pa':'ma', 'part':0, 'v':100, 'mark':2},
+//      {'para':'ma', 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
+//      {'para':'yl', 'part':0, 'v':100, 'mark':2},
+//      {'para':'yl', 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
+//      {'para':'bk', 'part':0, 'v':100, 'mark':2},
+//      {'para':'bk', 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
+//      {'para':'Op', 'part':0, 'v':100, 'mark':2},
+//      {'para':'Op', 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
+//      {'para':'sw', 'part':0, 'v':100, 'mark':2},
+//      {'para':'sw', 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
+//      {'para':'ib', 'part':0, 'other':0, 'v':'check', 'mark':2},
+
+//      {'para':'ac', 'mark':2},
+//      {'para':'XP', 'change':0, 'part':0, 'v':1, 'beginMark':2, 'endMark':3},
+//      {'para':'XP', 'change':0, 'part':0, 'v':1, 'mark':2},
+//      {'para':'YP', 'change':0, 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
+//      {'para':'YP', 'change':0, 'part':0, 'v':100, 'mark':2},
+//      {'para':'Dir', 'change':0, 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
+//      {'para':'Dir', 'change':0, 'part':0, 'v':100, 'mark':2},
+//      {'para':'Magnitude', 'change':0, 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
+//      {'para':'Magnitude', 'change':0, 'part':0, 'v':100, 'mark':2},
+//      {'para':'Mass', 'change':0, 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
+//      {'para':'Mass', 'change':0, 'part':0, 'v':100, 'mark':2},
+//      {'para':'Cyan', 'change':0, 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
+//      {'para':'Cyan', 'change':0, 'part':0, 'v':100, 'mark':2},
+//      {'para':'Magenta', 'change':0, 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
+//      {'para':'Magenta', 'change':0, 'part':0, 'v':100, 'mark':2},
+//      {'para':'Yellow', 'change':0, 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
+//      {'para':'Yellow', 'change':0, 'part':0, 'v':100, 'mark':2},
+//      {'para':'Black', 'change':0, 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
+//      {'para':'Black', 'change':0, 'part':0, 'v':100, 'mark':2},
+//      {'para':'Op', 'change':0, 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
+//      {'para':'Op', 'change':0, 'part':0, 'v':100, 'mark':2},
+//      {'para':'Width', 'change':0, 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
+//      {'para':'Width', 'change':0, 'part':0, 'v':100, 'mark':2},
+//      {'para':'IB', 'change':0, 'part':0, 'other':0, 'v':'check', 'mark':2}
+	];
 
 	this.CENTIMETERS_PER_INCH = 2.54;
 
-	this.particles = [], this.changes = [];
+	this.particles = [];
+	this.changes = [];
 	this.svgViewport = document.getElementById('svgViewport');
 	this.svgGroup = document.getElementById('svgGroup');
 	this.svgViewport.style.width = window.innerWidth - 395;
@@ -45,16 +125,52 @@ var Orbygraph = function() {
 	dimensionSelect.onchange = function() {
 		orbygraph.selectDimension();
 	};
+    this.link = document.getElementById('saveLink');
 	
 	this.go();
 	this.textClick(document.getElementById('about'));
+};
+
+Orbygraph.prototype.generateFull = function() {
+	var frame, totalFrames, secondsPerFrame, seconds, animChange,
+		tis, // time in seconds
+		tac; // this animation change
+
+	seconds = this.marks[0].s;
+	totalFrames = seconds * this.FPS;
+	secondsPerFrame = seconds / totalFrames;
+	for(frame = 0; frame < totalFrames; frame++) {
+		this.go(frame); // save the frame as one of many for animation
+		tis = (frame + 1) * secondsPerFrame;
+        for(animChange = 0; animChange < this.animChanges.length; animChange++) {
+        	tac = this.animChanges[animChange];
+			if(tis > this.marks[tac.beginMark].s && (tac.oneShot === true || tis < this.marks[tac.endMark].s)) {
+				switch(tac.parameter) {
+					case 'changeLoop': this.cli += tac.value; break;
+					case 'orbitLoop': this.oli += tac.value; break;
+					case 'backgroundCyan': this.cc += tac.value; break;
+					case 'backgroundMagenta': this.cm += tac.value; break;
+					case 'backgroundYellow': this.cy += tac.value; break;
+					case 'backgroundBlack': this.ck += tac.value; break;
+					case 'addParticle':
+						this.addParticle(true);
+						tac.endMark = 1;
+						tac.oneShot = false;
+						break;
+					case 'xp':
+						this.particles[tac.index].xp += tac.value;
+						break;
+				}
+			}
+        }
+	}
 };
 
 Orbygraph.prototype.toggleGeneral = function() {
 	var generalSettingsSpan;
 	
 	generalSettingsSpan = document.getElementById('generalSettingsSpan');
-	if(generalSettingsSpan.style.display != 'none') {
+	if(generalSettingsSpan.style.display !== 'none') {
 		generalSettingsSpan.style.display = 'none';
 		generalSettingsSpan.style.visibility = 'hidden';
 	} else {
@@ -212,7 +328,7 @@ Orbygraph.prototype.updatePixelDimensions = function() {
 	}	
 };
 
-Orbygraph.prototype.saveAsPNG = function() {
+Orbygraph.prototype.saveAsPNG = function(frame) {
 	var svgString, canvas, context, domURL, image, svg, url, imageDiv, pw, ph,
 		ppi, scaleFactor, newWindow;
 	
@@ -252,24 +368,30 @@ Orbygraph.prototype.saveAsPNG = function() {
 		// the image is loaded into the canvas
 		context.drawImage(image, 0, 0);
 		// the canvas outputs a base 64 encoded string version of the image
-//		png = canvas.toDataURL('image/png');
-//		domURL.revokeObjectURL(png);
-		
-//		a = document.createElement('a');
-//		a.download = 'image.png';
-//		a.href = png;
-		newWindow = window.open();
-		newWindow.document.body.appendChild(canvas);
-		//a.click();
-		
+		if(frame !== undefined) {
+            var pad = function pad(n, width) {
+                n = n + '';
+                return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
+            };
+
+//            orbygraph.link.download = 'frame' + pad(frame, 3) + '.jpeg';
+//            orbygraph.link.href = canvas.toDataURL('image/jpeg', 0.9);
+            orbygraph.link.download = 'frame' + pad(frame, 3) + '.png';
+            orbygraph.link.href = canvas.toDataURL();
+            orbygraph.link.click();
+		} else {
+            newWindow = window.open();
+            newWindow.document.body.appendChild(canvas);
+        }
+
 		// set the elements back the way they were
 		orbygraph.svgGroup.setAttribute("transform", "scale(1, 1)");
 		
 		// put the viewport back the way it was too
 		orbygraph.svgViewport.style.width =
-			Math.round(orbygraph.svgViewport.style.width / scaleFactor);
+			Math.round(parseInt(orbygraph.svgViewport.style.width) / scaleFactor);
 		orbygraph.svgViewport.height.baseVal.value =
-			Math.round(orbygraph.svgViewport.style.height / scaleFactor);
+			Math.round(parseInt(orbygraph.svgViewport.style.height) / scaleFactor);
 	};
 	image.src = url;
 };
@@ -403,11 +525,11 @@ Orbygraph.prototype.updateProperty = function(o, name, value, fixed, go) {
 	}
 };
 
-Orbygraph.prototype.addParticle = function() {
+Orbygraph.prototype.addParticle = function(dontGo) {
 	var newParticle = new this.Particle();
 	this.particles.push(newParticle);
 
-	this.go();
+	if(dontGo === undefined) { this.go(); }
 };
 
 Orbygraph.prototype.addChange = function() {
@@ -508,7 +630,7 @@ Orbygraph.prototype.toggleButton = function(o) {
 };
 
 // This paints the picture
-Orbygraph.prototype.go = function() {
+Orbygraph.prototype.go = function(frame) {
 	var i, j, k, l, m, p, q, newLine = [], svgNS, newXp = [], newYp = [], apc,
 		apc2, distance, direction, force, newPoint, newRect, newMg, thisC, selPart,
 		selParam, pass;
@@ -633,6 +755,10 @@ Orbygraph.prototype.go = function() {
 
 		// end for change loop
 	}
+	if(frame !== undefined) this.saveAsPNG(frame); // animation save
+};
+
+Orbygraph.prototype.saveThisFrame = function () {
 };
 
 window.onload = function() {
