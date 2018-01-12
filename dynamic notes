@@ -164,13 +164,25 @@ gui
 		- cost
 			- time (how long will it take to generate the movie)
 			- money (how much will it cost me)
-<Button for generating the full quality version of the movie> - Should bring up a confirmation alert telling the user how long it will take (estimate) and how much it will cost.  Are you sure you want this to start?  Yes, No.  After starting, the user should be shown in real time how much time it has taken so far, how much time it will still take (estimate), how much it has cost so far, how much it will cost when finished.  The user should be able to pause or stop (with confirmation) the current render anytime, but they are still charged for incomplete renders, make sure the user is aware of this.  Users are given $10 credit free with an account.  $10 should be enough for a months worth of rendering either the full or draft.  After that they would need to provide an email address associated with paypal.  Users can purchase blocks of credit: $10, $100, $1000, etc.  Buttons that cost money will be disabled when the user does not have enough credit.  This circumstance should be checked on the server at the time of the AJAX call also.  If the user has circumvented the client side button, disabled state, and does not have enough credit then it should give an alert saying they do not have enough credit.  That user's account should note the fact that they tried to cheat it.  All of this applies to the draft button also.
+<Button for generating the full quality version of the movie> - Should bring up a confirmation alert telling the user
+how long it will take (estimate) and how much it will cost.  Are you sure you want this to start?  Yes, No.  After
+starting, the user should be shown in real time how much time it has taken so far, how much time it will still take
+(estimate), how much it has cost so far, how much it will cost when finished.  The user should be able to pause or stop
+(with confirmation) the current render anytime, but they are still charged for incomplete renders, make sure the user
+is aware of this.  Users are given $10 credit free with an account.  $10 should be enough for a months worth of
+rendering either the full or draft.  After that they would need to provide an email address associated with paypal.
+Users can purchase blocks of credit: $10, $100, $1000, etc.  Buttons that cost money will be disabled when the user does
+not have enough credit.  This circumstance should be checked on the server at the time of the AJAX call also.  If the
+user has circumvented the client side button, disabled state, and does not have enough credit then it should give an
+alert saying they do not have enough credit.  That user's account should note the fact that they tried to cheat it.
+All of this applies to the draft button also.
 
 - Draft version of moving image
 	- inputs
 		- dimensions 1/[a] (1/2, 1/3, 1/4, etc.)
 		- Time 1/[b]
-			- 1/2 - generate every frame locally but only saves every other frame.  For instance if the FPS of the full version is 24 this would be 12fps
+			- 1/2 - generate every frame locally but only saves every other frame.  For instance if the FPS of the full
+			version is 24 this would be 12fps
 			- 1/3 - generate every frame locally but only saves every third frame.  This would be 8fps.
 			- 1/4 6fps
 			- etc.  how do you handle FPS that is floating point?
@@ -180,10 +192,204 @@ gui
 	- outputs
 		- total seconds remains the same
 		- total frames is reduced
-		- FPS derived from ratio, then that calculated FPS is applied to the generation of the MP4 on the server.  Might become floating point.
+		- FPS derived from ratio, then that calculated FPS is applied to the generation of the MP4 on the server.
+		Might become floating point.
 		- memory size should be reduced, expressed in MB
 		- cost
 			- time reduced
 			- money reduced
 <Button for generating the draft version of the movie>
+
+	// Names and values of event elements
+
+	// pm = parameter or cp = change parameter
+	//  cl = change loop iterations
+	//  ol = orbit loop iterations
+	//  cy = cyan (0-1 float)
+	//  ma = magenta ''
+	//  yl = yellow ''
+	//  bk = black ''
+	//  ap = add particle (no value, the index is auto-generated)
+	//  dp = delete particle (unsigned > -1)
+    //  xp = x position (pixels)
+    //  yp = y position ''
+    //  dr = direction (radians float)
+    //  mg = magnitude (unsigned float)
+	//  ms = mass (unsigned float)
+	//  op = opacity (0-1 float)
+	//  sw = stroke width (unsigned > 0 float)
+	//  ib = 0 or 1 (influenced by or not)
+	//  ac = add change (no value, the index is auto-generated)
+	//  dc = delete change (unsigned > -1)
+	// vl = value
+	// bm = beginning time mark (seconds float)
+	// em = ending time mark (seconds float)
+	// mk = one time mark (seconds float)
+	// pt = particle index (int > -1)
+	// ch = change index (int > -1)
+	// op = other particle for influenced by (int > -1)
+
+	this.events = [
+		// static general changes
+		// Every frame from begin mark to end mark, increase the number of
+		// 	change loops, or simulations, by the specified value, which is per
+		//  second.  In general these will be small numbers.
+        // (parameter, change loop), value, index of beginning mark, index of
+		//  ending mark
+//		{pm:'cl', vl:1, bm:1, em:2},
+		// at mark, just once, set the change loop to the specified value.  In
+		//  general these will be larger numbers.
+//		{pm:'cl', vl:1, mk:1},
+		// for still images no time mark means the beginning or 0 seconds
+//		{pm:'cl', vl:1},
+		// orbit loop (number of iterations in each simulation)
+//      {pm:'ol', vl:1, bm:1, em:2},
+// 		{pm:'ol', vl:1, mk:1},
+// 		{pm:'ol', vl:1}, // still image
+		// cyan (since there is no particle parameter this means it is cyan of
+		//  the background color)
+//      {pm:'cy', vl:0.01, bm:1, em:3},
+//      {pm:'cy', vl:0.01, mk:1},
+//      {pm:'cy', vl:0.01}, // still image
+		// magenta
+//      {pm:'ma', vl:0.01, bm:2, em:4},
+//      {pm:'ma', vl:0.01, mk:2},
+//      {pm:'ma', vl:0.01}, // still image
+		// yellow
+//      {pm:'yl', vl:0.01, bm:3, em:5},
+//      {pm:'yl', vl:0.01, mk:3},
+//      {pm:'yl', vl:0.01}, // still image
+		// black
+//      {pm:'bk', vl:0.01, bm:4, em:5},
+//      {pm:'bk', vl:0.01, mk:4},
+//      {pm:'bk', vl:0.01}, // still image
+
+		// particle changes
+		// add particle
+//      {pm:'ap', mk:3},
+//        {pm:'ap'}, // still image
+//      {pm:'dp', vl:0, mk:2),
+		// does not make sense to delete particles in a still image
+		// x position of particle
+//        {pm:'xp', pt:0, vl:100, bm:2, em:3},
+//		{pm:'xp', pt:0, vl:100, mk:2},
+//      {pm:'xp', pt:0, vl:100}, // still image
+		// y position of particle
+//      {pm:'yp', pt:0, vl:100, bm:2, em:3},
+//      {pm:'yp', pt:0, vl:100, mk:2},
+//      {pm:'yp', pt:0, vl:100}, // still image
+		// direction of vector
+//        {pm:'dr', pt:0, vl:100, bm:2, em:3},
+//      {pm:'dr', pt:0, vl:100, mk:2},
+//      {pm:'dr', pt:0, vl:100}, // still image
+		// magnitude of vector
+//      {pm:'mg', pt:0, vl:100, bm:2, em:3},
+//      {pm:'mg', pt:0, vl:100, mk:2},
+//        {pm:'mg', pt:0, vl:100}, // still image
+		// mass of particle
+//      {pm:'ms', pt:0, vl:100, bm:2, em:3},
+// 		{pm:'ms', pt:0, vl:100, mk:2},
+// 		{pm:'ms', pt:0, vl:100}, // still image
+        // cyan (since there is a particle parameter this means it is cyan of
+        //  the particle color instead of the background)
+//      {pm:'cy', pt:0, vl:100, bm:2, em:3},
+//      {pm:'cy', pt:0, vl:100, mk:2},
+//      {pm:'cy', pt:0, vl:100}, // still image
+		// magenta of particle
+//      {pm:'ma', pt:0, vl:100, bm:2, em:3},
+//      {pm:'ma', pt:0, vl:100, mk:2},
+//      {pm:'ma', pt:0, vl:100}, // still image
+		// yellow of particle
+//      {pm:'yl', pt:0, vl:100, bm:2, em:3},
+//      {pm:'yl', pt:0, vl:100, mk:2},
+//      {pm:'yl', pt:0, vl:100}, // still image
+		// black of particle
+//      {pm:'bk', pt:0, vl:100, bm:2, em:3},
+//      {pm:'bk', pt:0, vl:100, mk:2},
+//      {pm:'bk', pt:0, vl:100}, // still image
+		// opacity of particle
+//      {pm:'op', pt:0, vl:100, bm:2, em:3},
+//      {pm:'op', pt:0, vl:100, mk:2},
+//      {pm:'op', pt:0, vl:100}, // still image
+		// stroke width
+//      {pm:'sw', pt:0, vl:100, bm:2, em:3},
+//      {pm:'sw', pt:0, vl:100, mk:2},
+//      {pm:'sw', pt:0, vl:100}, // still image
+		// At mark m, just once, set the influenced by parameter of particle pt,
+		//  other particle op to value v[0 checked or 1 not checked]
+//      {pm:'ib', pt:0, op:1, vl:1, mk:2},
+//      {pm:'ib', pt:0, op:1, vl:1},
+
+		// add change at time mark mk for particle pt with change parameter cp
+		//  and value vl.  Changes are fully defined from the beginning because
+		//  there are not that many parameters to set.  The same is not true for
+		//  particles which have default values.
+//      {pm:'ac', pt:0, cp:'xp', vl:0, mk:2},
+//      {pm:'ac', pt:0, cp:'xp', vl:0}, // still image
+		// delete change index value vl at time mark mk.
+//      {pm:'dc', vl:0, mk:3},
+		// does not make sense to delete changes with a still image
+		// At time mark mk, just once, set value to vl.
+//		{ch:0, vl:1, mk:2},
+//		// since all parameters for changes are set at the adding it does not
+		//  make sense to change change values for a still image
+        // Every frame from time mark bm to time mark em increment value vl per
+		//  time in seconds per frame.
+//      {ch:0, vl:1, bm:2, em:3},
+	];
+
+cd /cygdrive/C/Users/jvonachen/Desktop/ffmpeg-20170404-1229007-win64-static/ffmpeg-20170404-1229007-win64-static/bin
+./ffmpeg.exe -r 30 -s 500x500 -pix_fmt yuv420p -i ../../../sequences/frame%03d.png test.mp4
+
+500x500
+
+- Play the audio and hit keys, or keys on a midi keyboard, those messages change the animation.
+- Midi keyboards not only have many keys but also can sense velocity and polyphonic after-touch which could be very
+useful for communicating information to an animation.
+- You can play the sound back at any speed, preferably at a slower speed, and layers of changes to the animation can be
+applied in multiple sessions.
+- Preferably the audio is played back slower but not lower.  In other words the audio is time stretched for the sake of
+timing and sync.
+- Later you can adjust the animation event markers manually to perfect the coordination.
+
+Have a checkbox called create animation and what happens is that when you press an adjusting button that effects the
+image it will continue applying that step's adjustment until you press it again or you uncheck the create animation
+checkbox.  Each one is a toggle and will change color or something showing that it is engaged.  You can change the step
+also in the middle of it.  You can have as many going as you like.  You listen to a song being played from anywhere,
+make this animation and then stitch the two together using some other software.
+
+What if the images become too complex to generate in a given frame rate?  Stop or limit the image after a time threshold
+is exceeded.
+
+Actually playback speed of an HTML5 audio tag can be played back at any speed so figure out how fast the current set of
+images can be made and slow down the playback so the "artist" has time to make animation changes in time with the music.
+Also when thse record button is toggled on it means that audio playback will start as soon as the user adds a particle.
+
+Should be able to make animations without any audio.
+
+The simplest thing to do is provide a button, "now", to save this image at the chosen resolution.  That way you can make
+multiple changes and press save. *That was pretty stupid*
+
+The next simplest thing to do would be to check a checkbox, called "each", where each adjustment saves an image.  You
+would only be able to adjust one thing at a time for each frame but sometimes that's all you want to do.  Then uncheck
+the checkbox and it won't save.  When that box is checked it should disable the save now button and un-checking should
+re-enable it. *easier and useful but still pretty tedious*
+
+The next more complicated thing to do would be to check another box called "flow" where clicking an adjustment will
+continue to adjust and the image changes every x FPS, or it will try to anyway.  Perhaps 24FPS will be an upper limit.
+It will continue to adjust until a limit is hit or the button is hit again or the opposite direction is hit.  This means
+the step values will need to be very small.
+
+Should be able to specify transparent for the background color. Also should be able to have a shaped mask where the
+generated image elements are masked out in a way other than just the square or rectangle of the full image shape.  That
+way you can make animations for VJ software.
+
+**********************************************
+
+Instead of "downloading" the images, in other words saving them locally, I should upload them to the server and when
+finished the server should stitch them into animations and then download the completed movie file.
+
+ffmpeg -pattern_type glob -framerate 24 -i '*.png' orbigraph.mp4
+
+ffmpeg -pattern_type glob -framerate 24 -i '*.png' -c:v libx264 -preset veryslow -crf 0 orbigraph.mp4
 

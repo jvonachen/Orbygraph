@@ -5,84 +5,25 @@ var Orbygraph = function() {
 	var addParticleButton, addChangeButton, pwInput, phInput, ppiInput, dimensionSelect;
 
 	// animation stuff
-	this.FPS = 30;
-	this.marks = [
-		20, // index 0 could always be the total length of the animation.
-
-		0,  // index 1 could always be 0
-        5,  // index 2
-        10, // index 3
-        15, // index 4
-        20  // index 5
+	this.FPS = 30; // later this will be set in the view and control layers
+	this.marks = [ // time marks expressed in seconds
+		0,  // index 0 is always be the beginning or 0 seconds
+        10 // index 1 is always the total number of seconds
 	];
-	this.animChanges = [
-		// static general changes
-		// parameter, change loop, value, beginning mark, ending mark
-//		{'pa':'cl', 'v':1, 'bm':1, 'em':2},
-		// mark
-//		{'pa':'cl', 'v':1, 'm':1},            // at mark, just once, set changeLoop to value
-//      {'pa':'ol', 'v':1, 'bm':1, 'em':2},   // from begin mark to end mark increase orbitLoop by value per second
-//      {'pa':'ol', 'v':1, 'm':1},                      // at mark, just once, set orbitLoop to value
-//      {'pa':'cy', 'v':0.01, 'beginMark':1, 'endMark':3},    // from begin mark to end mark increase the background cyan value per second
-//      {'pa':'cy', 'v':0.01, 'mark':1},                      // at mark, just once, set the background cyan to value
-//      {'pa':'ma', 'v':0.01, 'beginMark':2, 'endMark':4}, // from begin mark to end mark increase the background magenta value per second
-//      {'pa':'ma', 'v':0.01, 'mark':2},                   // at mark, just once, set the background magenta to value
-//      {'pa':'yl', 'v':0.01, 'beginMark':3, 'endMark':5},  // from begin mark to end mark increase the background yellow value per second
-//      {'pa':'yl', 'v':0.01, 'mark':3},                    // at mark, just once, set the background yellow to value
-//      {'pa':'bk', 'v':0.01, 'beginMark':4, 'endMark':5},   // from begin mark to end mark increase the background black value per second
-//      {'pa':'bk', 'v':0.01, 'mark':4},                     // at mark, just once, set the background black to value
 
-		// particle changes
-//      {'pa':'ap', 'mark':3},
-//		{'pa':'xp', 'part':0, 'v':100, 'mark':2},
-//      {'pa':'xp', 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
-//      {'pa':'yp', 'part':0, 'v':100, 'mark':2},
-//      {'pa':'yp', 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
-//      {'pa':'dr', 'part':0, 'v':100, 'mark':2},
-//      {'pa':'dr', 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
-//      {'pa':'mg', 'part':0, 'v':100, 'mark':2},
-//      {'pa':'mg', 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
-//      {'pa':'ms', 'part':0, 'v':100, 'mark':2},
-//      {'pa':'ms', 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
-//      {'pa':'cy', 'part':0, 'v':100, 'mark':2},
-//      {'pa':'cy', 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
-//      {'pa':'ma', 'part':0, 'v':100, 'mark':2},
-//      {'para':'ma', 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
-//      {'para':'yl', 'part':0, 'v':100, 'mark':2},
-//      {'para':'yl', 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
-//      {'para':'bk', 'part':0, 'v':100, 'mark':2},
-//      {'para':'bk', 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
-//      {'para':'Op', 'part':0, 'v':100, 'mark':2},
-//      {'para':'Op', 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
-//      {'para':'sw', 'part':0, 'v':100, 'mark':2},
-//      {'para':'sw', 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
-//      {'para':'ib', 'part':0, 'other':0, 'v':'check', 'mark':2},
-
-//      {'para':'ac', 'mark':2},
-//      {'para':'XP', 'change':0, 'part':0, 'v':1, 'beginMark':2, 'endMark':3},
-//      {'para':'XP', 'change':0, 'part':0, 'v':1, 'mark':2},
-//      {'para':'YP', 'change':0, 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
-//      {'para':'YP', 'change':0, 'part':0, 'v':100, 'mark':2},
-//      {'para':'Dir', 'change':0, 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
-//      {'para':'Dir', 'change':0, 'part':0, 'v':100, 'mark':2},
-//      {'para':'Magnitude', 'change':0, 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
-//      {'para':'Magnitude', 'change':0, 'part':0, 'v':100, 'mark':2},
-//      {'para':'Mass', 'change':0, 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
-//      {'para':'Mass', 'change':0, 'part':0, 'v':100, 'mark':2},
-//      {'para':'Cyan', 'change':0, 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
-//      {'para':'Cyan', 'change':0, 'part':0, 'v':100, 'mark':2},
-//      {'para':'Magenta', 'change':0, 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
-//      {'para':'Magenta', 'change':0, 'part':0, 'v':100, 'mark':2},
-//      {'para':'Yellow', 'change':0, 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
-//      {'para':'Yellow', 'change':0, 'part':0, 'v':100, 'mark':2},
-//      {'para':'Black', 'change':0, 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
-//      {'para':'Black', 'change':0, 'part':0, 'v':100, 'mark':2},
-//      {'para':'Op', 'change':0, 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
-//      {'para':'Op', 'change':0, 'part':0, 'v':100, 'mark':2},
-//      {'para':'Width', 'change':0, 'part':0, 'v':100, 'beginMark':2, 'endMark':3},
-//      {'para':'Width', 'change':0, 'part':0, 'v':100, 'mark':2},
-//      {'para':'IB', 'change':0, 'part':0, 'other':0, 'v':'check', 'mark':2}
-	];
+	this.events = [
+		{pm:'ap'},
+		{pm:'xp', pt:0, vl:-10},
+		{pm:'yp', pt:0, vl:-10},
+		{pm:'dr', pt:0, vl:Math.PI * 1.5},
+		{pm:'ol', vl:520},
+		{pm:'mg', pt:0, vl:1},
+        {pm:'xp', pt:0, vl:50, bm:0, em:1},
+        {pm:'ib', pt:0, op:1, vl:1},
+        {pm:'ap'},
+        {pm:'xp', pt:1, vl:250},
+        {pm:'yp', pt:1, vl:250}
+    ];
 
 	this.CENTIMETERS_PER_INCH = 2.54;
 
@@ -107,7 +48,7 @@ var Orbygraph = function() {
 	 null, 1, 0);
 	this.makeControl(this, 'controlTable', 'Orbit Loop', 'oli', 20, 1, null, 10,
 		0, null, 1, 0);
-	this.makeControl(this, 'controlTable', 'Cyan',    'cc', 0, 0, 1, 0.1, 5, 1, 0, 5);
+	this.makeControl(this, 'controlTable', 'Cyan',    'cc', 0, 0, 1, 0.1, 5, 1, 0, 5, true); // flow-able
 	this.makeControl(this, 'controlTable', 'Magenta', 'cm', 0, 0, 1, 0.1, 5, 1, 0, 5);
 	this.makeControl(this, 'controlTable', 'Yellow',  'cy', 0, 0, 1, 0.1, 5, 1, 0, 5);
 	this.makeControl(this, 'controlTable', 'Black',   'ck', 1, 0, 1, 0.1, 5, 1, 0, 5);
@@ -129,40 +70,62 @@ var Orbygraph = function() {
 	
 	this.go();
 	this.textClick(document.getElementById('about'));
+	this.saveEach = false;
 };
 
 Orbygraph.prototype.generateFull = function() {
-	var frame, totalFrames, secondsPerFrame, seconds, animChange,
+	var frame, totalFrames, secondsPerFrame, seconds, event,
 		tis, // time in seconds
-		tac; // this animation change
+		te; // this event
 
-	seconds = this.marks[0].s;
+    this.particles = [];
+    this.changes = [];
+	seconds = this.marks[1]; // The second mark is always the total number of
+	// seconds
 	totalFrames = seconds * this.FPS;
 	secondsPerFrame = seconds / totalFrames;
 	for(frame = 0; frame < totalFrames; frame++) {
-		this.go(frame); // save the frame as one of many for animation
-		tis = (frame + 1) * secondsPerFrame;
-        for(animChange = 0; animChange < this.animChanges.length; animChange++) {
-        	tac = this.animChanges[animChange];
-			if(tis > this.marks[tac.beginMark].s && (tac.oneShot === true || tis < this.marks[tac.endMark].s)) {
-				switch(tac.parameter) {
-					case 'changeLoop': this.cli += tac.value; break;
-					case 'orbitLoop': this.oli += tac.value; break;
-					case 'backgroundCyan': this.cc += tac.value; break;
-					case 'backgroundMagenta': this.cm += tac.value; break;
-					case 'backgroundYellow': this.cy += tac.value; break;
-					case 'backgroundBlack': this.ck += tac.value; break;
-					case 'addParticle':
-						this.addParticle(true);
-						tac.endMark = 1;
-						tac.oneShot = false;
-						break;
-					case 'xp':
-						this.particles[tac.index].xp += tac.value;
-						break;
+		tis = frame * secondsPerFrame;
+        for(event = 0; event < this.events.length; event++) {
+        	te = this.events[event];
+			if(
+				( // 0 mark events for a still image
+					te.mk === undefined && te.bm === undefined &&
+					te.em === undefined && te.done === undefined
+				) ||
+				( // single mark events for setting settings just once
+	                te.bm === undefined && te.em === undefined &&
+        	        te.mk !== undefined && tis >= this.marks[te.mk] &&
+                	te.done === undefined
+				)
+			) {
+                switch(te.pm) {
+                    case 'ap': orbygraph.addParticle(); break;
+                    case 'mg': this.particles[te.pt].mg = te.vl; break;
+                    case 'xp': this.particles[te.pt].xp = te.vl; break;
+                    case 'yp': this.particles[te.pt].yp = te.vl; break;
+                    case 'dr': this.particles[te.pt].dr = te.vl; break;
+                    case 'ol': this.oli = te.vl; break;
+					case 'ib': this.particles[te.pt]
+					default: alert('unhandled one time event');
+                }
+                te.done = true;
+            } else if ( // continuous event
+				te.mk === undefined && te.bm !== undefined &&
+				te.em !== undefined && tis >= this.marks[te.bm] &&
+				tis < this.marks[te.em]
+			) {
+				switch(te.pm) {
+					case 'mg': this.particles[te.pt].mg += te.vl * secondsPerFrame; break;
+					case 'xp': this.particles[te.pt].xp += te.vl * secondsPerFrame; break;
+                    case 'yp': this.particles[te.pt].yp += te.vl * secondsPerFrame; break;
+					case 'dr': this.particles[te.pt].dr += te.vl * secondsPerFrame; break;
+                    case 'ol': this.oli += te.vl * secondsPerFrame; break;
+					default: alert('unhandled continuous event');
 				}
 			}
         }
+		this.go(frame); // save the frame as one of many for animation
 	}
 };
 
@@ -328,6 +291,11 @@ Orbygraph.prototype.updatePixelDimensions = function() {
 	}	
 };
 
+Orbygraph.prototype.saveThisFrame = function() {
+    var date = new Date();
+    orbygraph.saveAsPNG(date.getTime()); // use a millisecond timestamp for the frame
+};
+
 Orbygraph.prototype.saveAsPNG = function(frame) {
 	var svgString, canvas, context, domURL, image, svg, url, imageDiv, pw, ph,
 		ppi, scaleFactor, newWindow;
@@ -396,10 +364,12 @@ Orbygraph.prototype.saveAsPNG = function(frame) {
 	image.src = url;
 };
 
-// Make a control row for a value that's global or a particle or a chenge
+// Make a control row for a value that's global or a particle or a change
 Orbygraph.prototype.makeControl = function(o, tableId, label, name, defaultVal,
-	min, max, step, fixed, smax, smin, sfixed) {
+	min, max, step, fixed, smax, smin, sfixed, flow) {
 	var table, newRow, newCell, newButton, newSpan, LABEL_WIDTH = '120px';
+
+	flow = flow === undefined ? false : true;
 
 	table = document.getElementById(tableId);
 	newRow = document.createElement('tr');
@@ -428,6 +398,9 @@ Orbygraph.prototype.makeControl = function(o, tableId, label, name, defaultVal,
 	newButton.id = name + 'IncButton' + o.id;
 	newButton.className = 'value';
 	newButton.innerHTML = '/\\';
+	if(flow) {
+	    newButton.style.backgroundColor = '#000000';
+    }
 
 	newCell = document.createElement('td');
 	newRow.appendChild(newCell);
@@ -756,9 +729,7 @@ Orbygraph.prototype.go = function(frame) {
 		// end for change loop
 	}
 	if(frame !== undefined) this.saveAsPNG(frame); // animation save
-};
-
-Orbygraph.prototype.saveThisFrame = function () {
+    if(this.saveEach) this.saveThisFrame();
 };
 
 window.onload = function() {
